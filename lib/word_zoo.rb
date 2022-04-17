@@ -65,8 +65,35 @@ module WordZoo
   end
 
   def remove_word(word)
-    # travel the word tree to the last letter
-    # make 'is_word' false on the last node
+    return if word.nil?
+    init_tree = self.tree
+    word_letters = word.downcase.split('')
+
+    find_letter_in_level = lambda do |word_letters_left, lvl_tree|
+      letter = word_letters_left.shift
+
+      if letter.nil?
+        lvl_tree['is_word'] = false
+        return lvl_tree
+      end
+
+      if !lvl_tree[letter]
+        lvl_tree[letter] = { 'is_word' => false }
+      end
+
+      lvl_tree[letter] = lvl_tree[letter].merge(find_letter_in_level.call(word_letters_left, lvl_tree[letter]))
+
+      lvl_tree
+    end
+
+    self.letters = find_letter_in_level.call(word_letters, init_tree).to_json
+
+    # update the lengths
+    lengths = self.word_lengths_data
+    lengths[word.length] = 1
+    self.word_lengths = lengths.to_json
+
+    self.save!
   end
 
   # get a hash of how many words of each length exists

@@ -5,11 +5,11 @@ require_relative "lib/word_zoo/version"
 Gem::Specification.new do |spec|
   spec.name = "word_zoo"
   spec.version = WordZoo::VERSION
-  spec.authors = ["Matt Lao"]
+  spec.authors = ["Matt Lao", "Malika Kassen-Lao"]
   spec.email = ["laomatt1@gmail.com"]
 
   spec.summary = "This gem provides an active support concern for the management of letters in word trees."
-  # spec.description = ""
+  spec.description = "To use this, please include WordZoo as a module in your model."
   # spec.homepage = "TODO: Put your gem's website or public repo URL here."
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.5.0"
