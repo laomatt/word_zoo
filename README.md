@@ -32,6 +32,31 @@ Or install it yourself as:
            t.string :name
 
 
+## Instance methods:
+
+      # list all words
+      list_words
+
+      # input a word
+      input_word(word)
+
+
+      def remove_word(word)
+
+      # get a hash of how many words of each length exists
+      word_lengths_data
+
+      # see if the input word exists in this list
+      is_word?(word)
+
+      # find a random word
+      find_word
+
+      # view the tree as it exists as a tree object
+      tree
+
+
+
 
 
 ## Development
