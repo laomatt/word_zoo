@@ -7,10 +7,12 @@ module WordZoo
   # this is an active record concern
 
   # must be included in a model whose schema includes:
-  
+
   # t.longblob :letters
+  # t.longblob :word_lengths
   # t.string :name
 
+  # list all words
   def list_words
     words = []
     init_tree = tree
@@ -30,28 +32,7 @@ module WordZoo
     words
   end
 
-
-  def self.test_file
-    if self.find_by_name('test')
-      test_list = self.find_by_name('test')
-    else
-      test_list = self.new(name: 'test')
-    end
-
-    self.input_file('negwords.txt', test_list)
-    self.wipe_test
-  end
-
-  def self.wipe_test
-    if self.find_by_name('test')
-      test_list = self.find_by_name('test')
-    else
-      test_list = self.new(name: 'test')
-    end
-
-    test_list.update(letters: nil)
-  end
-
+  # input a word
   def input_word(word)
     return if word.nil?
     init_tree = self.tree
@@ -84,20 +65,12 @@ module WordZoo
     self.save!
   end
 
-  def cached_word_list
-    {}
+  def remove_word(word)
+    # travel the word tree to the last letter
+    # make 'is_word' false on the last node
   end
 
-  def populate_lengths
-    lengths = {}
-    self.list_words.each do |word|
-      lengths[word.length] = 1
-    end
-
-    self.word_lengths = lengths.to_json
-    self.save!
-  end
-
+  # get a hash of how many words of each length exists
   def word_lengths_data
     return {} if self.word_lengths.nil?
 
@@ -108,7 +81,7 @@ module WordZoo
     end
   end
 
-
+  # see if the input word exists in this list
   def is_word?(word)
     init_tree = tree
     word_letters = word.downcase.split('')
@@ -128,6 +101,7 @@ module WordZoo
     find_letter_in_level.call(word_letters, init_tree)
   end
 
+  # find a random word
   def find_word
     word = []
 
@@ -143,7 +117,7 @@ module WordZoo
     word.join
   end
 
-
+  # view the tree as it exists as a tree object
   def tree
     @tree ||= begin
       JSON.parse(letters)
