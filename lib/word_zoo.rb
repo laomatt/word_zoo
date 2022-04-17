@@ -16,7 +16,6 @@ module WordZoo
   def list_words
     words = []
     init_tree = tree
-
     trav = lambda do |tree,word=""|
       if tree['is_word']
         words << word
