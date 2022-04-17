@@ -22,7 +22,17 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    This creates an active record concern module that you may include in your models:
+            include WordZoo
+
+    Database creation
+        The model that you include this in should have the following fields:
+           t.longblob :letters
+           t.longblob :word_lengths
+           t.string :name
+
+
+
 
 ## Development
 
